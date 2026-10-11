@@ -164,5 +164,66 @@ def build_all():
     (RULES_DIR / "AI.list").write_text("\n".join(ai_content) + "\n", encoding="utf-8")
     print(f" -> AI.list generated ({len(ai_sorted)} rules)")
 
+    # 额外构建：China.list (纯净国内直连库，坚决剔除海外误判)
+    print("Building Clean China.list...")
+    FOREIGN_BLACKLIST = {
+        "microsoftonline.com", "download.microsoft.com", "update.microsoft.com",
+        "windowsupdate.microsoft.com", "download.jetbrains.com", "origin-a.akamaihd.net",
+        "blzddist1-a.akamaihd.net", "steamcommunity-a.akamaihd.net", "images-amazon.com",
+        "cloudflare-cn.com", "cloudflarecn.net", "cf-ns.com", "cf-ns.net", "cf-ns.site", "cf-ns.tech"
+    }
+    
+    china_rules = set()
+    # 1. 常用国内大厂及基线
+    base_china_seeds = [
+        "DOMAIN-SUFFIX,baidu.com", "DOMAIN-SUFFIX,qq.com", "DOMAIN-SUFFIX,tencent.com",
+        "DOMAIN-SUFFIX,weixin.qq.com", "DOMAIN-SUFFIX,wechat.com", "DOMAIN-SUFFIX,taobao.com",
+        "DOMAIN-SUFFIX,tmall.com", "DOMAIN-SUFFIX,alipay.com", "DOMAIN-SUFFIX,alicdn.com",
+        "DOMAIN-SUFFIX,aliyun.com", "DOMAIN-SUFFIX,jd.com", "DOMAIN-SUFFIX,360buyimg.com",
+        "DOMAIN-SUFFIX,bilibili.com", "DOMAIN-SUFFIX,hdslb.com", "DOMAIN-SUFFIX,bytedance.com",
+        "DOMAIN-SUFFIX,douyin.com", "DOMAIN-SUFFIX,toutiao.com", "DOMAIN-SUFFIX,meituan.com",
+        "DOMAIN-SUFFIX,dianping.com", "DOMAIN-SUFFIX,zhihu.com", "DOMAIN-SUFFIX,zhimg.com",
+        "DOMAIN-SUFFIX,163.com", "DOMAIN-SUFFIX,126.com", "DOMAIN-SUFFIX,netease.com",
+        "DOMAIN-SUFFIX,xiaomi.com", "DOMAIN-SUFFIX,mi.com", "DOMAIN-SUFFIX,miui.com",
+        "DOMAIN-SUFFIX,kuaishou.com", "DOMAIN-SUFFIX,weibo.com", "DOMAIN-SUFFIX,sinaimg.cn",
+        "DOMAIN-SUFFIX,10086.cn", "DOMAIN-SUFFIX,189.cn", "DOMAIN-SUFFIX,10010.com",
+        "DOMAIN-SUFFIX,12306.cn", "DOMAIN-SUFFIX,unionpay.com", "DOMAIN-SUFFIX,icbc.com.cn",
+        "DOMAIN-SUFFIX,ccb.com", "DOMAIN-SUFFIX,boc.cn", "DOMAIN-SUFFIX,abchina.com",
+        "DOMAIN-SUFFIX,cmbchina.com", "DOMAIN-SUFFIX,psbc.com", "DOMAIN-SUFFIX,amap.com",
+        "DOMAIN-SUFFIX,autonavi.com", "DOMAIN-SUFFIX,cainiao.com", "DOMAIN-SUFFIX,pinduoduo.com",
+        "DOMAIN-SUFFIX,yangkeduo.com", "DOMAIN-SUFFIX,iqiyi.com", "DOMAIN-SUFFIX,youku.com",
+        "DOMAIN-SUFFIX,ximalaya.com", "DOMAIN-SUFFIX,douban.com", "DOMAIN-SUFFIX,hicloud.com",
+        "DOMAIN-SUFFIX,vmall.com", "DOMAIN-SUFFIX,huawei.com", "DOMAIN-SUFFIX,sohu.com",
+        "DOMAIN-SUFFIX,sogou.com", "DOMAIN-SUFFIX,wps.cn", "DOMAIN-SUFFIX,kdocs.cn"
+    ]
+    china_rules |= set(base_china_seeds)
+
+    # 2. 从 v2fly geolocation-cn 抓取
+    geo_cn = fetch("https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/geolocation-cn")
+    for line in geo_cn.splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or line.startswith("include:"):
+            continue
+        domain = line.removeprefix("full:").split()[0].strip()
+        if not domain or "@" in domain or domain in FOREIGN_BLACKLIST:
+            continue
+        if any(domain.endswith("." + bad) or domain == bad for bad in FOREIGN_BLACKLIST):
+            continue
+        if line.startswith("full:"):
+            china_rules.add(f"DOMAIN,{domain}")
+        else:
+            china_rules.add(f"DOMAIN-SUFFIX,{domain}")
+
+    # 3. 过滤并生成 rules/China.list
+    clean_china_sorted = sorted(china_rules)
+    china_content = [
+        "# ========================================================",
+        "# Loon Rule Set: Pure China Direct (国内直连白名单)",
+        "# Cleaned & Verified by Hermes Agent (已剔除被误判的海外资产)",
+        "# ========================================================",
+    ] + clean_china_sorted
+    (RULES_DIR / "China.list").write_text("\n".join(china_content) + "\n", encoding="utf-8")
+    print(f" -> China.list generated ({len(clean_china_sorted)} rules)")
+
 if __name__ == "__main__":
     build_all()

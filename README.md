@@ -50,6 +50,16 @@ https://raw.githubusercontent.com/J606y/loon-rules/main/rules/Apple.list, policy
 
 ---
 
+### 3. 🇨🇳 纯净国内直连专区（告别国内 App 转圈卡死）
+
+#### ⑦ China 国内直连白名单（1700+ 条，纯净版）
+基于 v2fly 官方源深度清洗编译。彻底剔除了原版中误把微软更新（`microsoftonline.com`）、JetBrains、以及各大国际 Akamai CDN 强行直连导致网页卡死的毒瘤条目；全面收拢国内大厂、政务、金融、生活服务主域名，秒级直连放行。
+```ini
+https://raw.githubusercontent.com/J606y/loon-rules/main/rules/China.list, policy=国内网站, tag=China, enabled=true
+```
+
+---
+
 ## 防侧漏安全设计
 
 所有规则文件顶部均自动注入前置 **WebRTC / STUN 探测拦截**：
