@@ -1,0 +1,10 @@
+# ========================================================
+# Loon Rule Set: WebRTC & STUN Leak Blocker
+# Policy: REJECT
+# ========================================================
+AND,((PROTOCOL,UDP),(DEST-PORT,3478)),REJECT
+AND,((PROTOCOL,UDP),(DEST-PORT,5349)),REJECT
+DOMAIN-KEYWORD,stun,REJECT
+DOMAIN-SUFFIX,stun.l.google.com,REJECT
+DOMAIN-SUFFIX,stun.cloudflare.com,REJECT
+DOMAIN-SUFFIX,stun.services.mozilla.com,REJECT

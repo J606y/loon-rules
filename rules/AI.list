@@ -6,9 +6,8 @@
 AND,((PROTOCOL,UDP),(DEST-PORT,3478)),REJECT
 AND,((PROTOCOL,UDP),(DEST-PORT,5349)),REJECT
 DOMAIN-KEYWORD,stun,REJECT
-# --- AI Proxy Rules ---
+# --- Target AI Rules ---
 DOMAIN,ai.google.dev
-DOMAIN,aistudio.google.com
 DOMAIN,alkalicore-pa.clients6.google.com
 DOMAIN,alkalimakersuite-pa.clients6.google.com
 DOMAIN,antigravity-pa.googleapis.com
@@ -20,8 +19,6 @@ DOMAIN,cloudcode-pa.googleapis.com
 DOMAIN,daily-cloudcode-pa.googleapis.com
 DOMAIN,geminiweb-pa.clients.google.com
 DOMAIN,geminiweb-pa.clients6.google.com
-DOMAIN,generativelanguage.googleapis.com
-DOMAIN,makersuite.google.com
 DOMAIN,notebooklm-pa.googleapis.com
 DOMAIN,notebooklm.googleapis.com
 DOMAIN,o33249.ingest.sentry.io
@@ -37,7 +34,6 @@ DOMAIN,production-openaicom-storage.azureedge.net
 DOMAIN,servd-anthropic-website.b-cdn.net
 DOMAIN,webchannel-alkalimakersuite-pa.clients6.google.com
 DOMAIN-REGEX,^chatgpt-async-webps-prod-\S+-\d+\.webpubsub\.azure\.com$
-DOMAIN-SUFFIX,ai.com
 DOMAIN-SUFFIX,ai.studio
 DOMAIN-SUFFIX,aicode.googleapis.com
 DOMAIN-SUFFIX,aida.googleapis.com
@@ -89,6 +85,7 @@ DOMAIN-SUFFIX,opal.google
 DOMAIN-SUFFIX,opal.google.com
 DOMAIN-SUFFIX,openai.com
 DOMAIN-SUFFIX,openai.com.cdn.cloudflare.net
+DOMAIN-SUFFIX,openaiassets.blob.core.windows.net
 DOMAIN-SUFFIX,perplexity.ai
 DOMAIN-SUFFIX,proactivebackend-pa.googleapis.com
 DOMAIN-SUFFIX,robinfrontend-pa.googleapis.com

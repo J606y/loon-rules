@@ -1,0 +1,20 @@
+# ========================================================
+# Loon Rule Set: Pixiv
+# Cleaned & Maintained by Hermes Agent (v2fly & MetaCubeX)
+# ========================================================
+# --- WebRTC / STUN Leak Prevention ---
+AND,((PROTOCOL,UDP),(DEST-PORT,3478)),REJECT
+AND,((PROTOCOL,UDP),(DEST-PORT,5349)),REJECT
+DOMAIN-KEYWORD,stun,REJECT
+# --- Target Rules ---
+DOMAIN-SUFFIX,ads-pixiv.net
+DOMAIN-SUFFIX,booth.pm
+DOMAIN-SUFFIX,fanbox.cc
+DOMAIN-SUFFIX,pixiv-recommend.net
+DOMAIN-SUFFIX,pixiv.co.jp
+DOMAIN-SUFFIX,pixiv.help
+DOMAIN-SUFFIX,pixiv.me
+DOMAIN-SUFFIX,pixiv.net
+DOMAIN-SUFFIX,pixiv.org
+DOMAIN-SUFFIX,pixivision.net
+DOMAIN-SUFFIX,pximg.net

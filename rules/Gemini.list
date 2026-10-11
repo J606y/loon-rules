@@ -1,14 +1,13 @@
 # ========================================================
 # Loon Rule Set: Gemini
-# Maintained by Hermes Agent from v2fly & MetaCubeX
+# Cleaned & Maintained by Hermes Agent (v2fly & MetaCubeX)
 # ========================================================
 # --- WebRTC / STUN Leak Prevention ---
 AND,((PROTOCOL,UDP),(DEST-PORT,3478)),REJECT
 AND,((PROTOCOL,UDP),(DEST-PORT,5349)),REJECT
 DOMAIN-KEYWORD,stun,REJECT
-# --- Target Rules (Full TCP/UDP/QUIC Proxy) ---
+# --- Target Rules ---
 DOMAIN,ai.google.dev
-DOMAIN,aistudio.google.com
 DOMAIN,alkalicore-pa.clients6.google.com
 DOMAIN,alkalimakersuite-pa.clients6.google.com
 DOMAIN,antigravity-pa.googleapis.com
@@ -18,8 +17,6 @@ DOMAIN,cloudcode-pa.googleapis.com
 DOMAIN,daily-cloudcode-pa.googleapis.com
 DOMAIN,geminiweb-pa.clients.google.com
 DOMAIN,geminiweb-pa.clients6.google.com
-DOMAIN,generativelanguage.googleapis.com
-DOMAIN,makersuite.google.com
 DOMAIN,notebooklm-pa.googleapis.com
 DOMAIN,notebooklm.googleapis.com
 DOMAIN,webchannel-alkalimakersuite-pa.clients6.google.com

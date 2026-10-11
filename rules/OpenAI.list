@@ -1,12 +1,12 @@
 # ========================================================
 # Loon Rule Set: OpenAI
-# Maintained by Hermes Agent from v2fly & MetaCubeX
+# Cleaned & Maintained by Hermes Agent (v2fly & MetaCubeX)
 # ========================================================
 # --- WebRTC / STUN Leak Prevention ---
 AND,((PROTOCOL,UDP),(DEST-PORT,3478)),REJECT
 AND,((PROTOCOL,UDP),(DEST-PORT,5349)),REJECT
 DOMAIN-KEYWORD,stun,REJECT
-# --- Target Rules (Full TCP/UDP/QUIC Proxy) ---
+# --- Target Rules ---
 DOMAIN,browser-intake-datadoghq.com
 DOMAIN,browser-intake-datadoghq.com @ads
 DOMAIN,o33249.ingest.sentry.io
@@ -20,7 +20,6 @@ DOMAIN,openaicom.imgix.net
 DOMAIN,openaicomproductionae4b.blob.core.windows.net
 DOMAIN,production-openaicom-storage.azureedge.net
 DOMAIN-REGEX,^chatgpt-async-webps-prod-\S+-\d+\.webpubsub\.azure\.com$
-DOMAIN-SUFFIX,ai.com
 DOMAIN-SUFFIX,chat.com
 DOMAIN-SUFFIX,chatgpt.com
 DOMAIN-SUFFIX,chatgpt.livekit.cloud
@@ -32,5 +31,6 @@ DOMAIN-SUFFIX,oaistatsig.com
 DOMAIN-SUFFIX,oaiusercontent.com
 DOMAIN-SUFFIX,openai.com
 DOMAIN-SUFFIX,openai.com.cdn.cloudflare.net
+DOMAIN-SUFFIX,openaiassets.blob.core.windows.net
 DOMAIN-SUFFIX,sora.com
 DOMAIN-SUFFIX,turn.livekit.cloud

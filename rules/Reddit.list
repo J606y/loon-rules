@@ -1,0 +1,21 @@
+# ========================================================
+# Loon Rule Set: Reddit
+# Cleaned & Maintained by Hermes Agent (v2fly & MetaCubeX)
+# ========================================================
+# --- WebRTC / STUN Leak Prevention ---
+AND,((PROTOCOL,UDP),(DEST-PORT,3478)),REJECT
+AND,((PROTOCOL,UDP),(DEST-PORT,5349)),REJECT
+DOMAIN-KEYWORD,stun,REJECT
+# --- Target Rules ---
+DOMAIN-SUFFIX,redd.it
+DOMAIN-SUFFIX,reddit.app.link
+DOMAIN-SUFFIX,reddit.com
+DOMAIN-SUFFIX,reddit.map.fastly.net
+DOMAIN-SUFFIX,redditblog.com
+DOMAIN-SUFFIX,reddithelp.com
+DOMAIN-SUFFIX,redditinc.com
+DOMAIN-SUFFIX,redditmail.com
+DOMAIN-SUFFIX,redditmedia.com
+DOMAIN-SUFFIX,redditspace.com
+DOMAIN-SUFFIX,redditstatic.com
+DOMAIN-SUFFIX,redditstatus.com
