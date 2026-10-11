@@ -1,0 +1,18 @@
+# ========================================================
+# Loon Rule Set: Claude
+# Maintained by Hermes Agent from v2fly & MetaCubeX
+# ========================================================
+# --- WebRTC / STUN Leak Prevention ---
+AND,((PROTOCOL,UDP),(DEST-PORT,3478)),REJECT
+AND,((PROTOCOL,UDP),(DEST-PORT,5349)),REJECT
+DOMAIN-KEYWORD,stun,REJECT
+# --- Target Rules (Full TCP/UDP/QUIC Proxy) ---
+DOMAIN,servd-anthropic-website.b-cdn.net
+DOMAIN-SUFFIX,anthropic.com
+DOMAIN-SUFFIX,clau.de
+DOMAIN-SUFFIX,claude.ai
+DOMAIN-SUFFIX,claude.com
+DOMAIN-SUFFIX,claude.dev
+DOMAIN-SUFFIX,claudemcpclient.com
+DOMAIN-SUFFIX,claudemcpcontent.com
+DOMAIN-SUFFIX,claudeusercontent.com
