@@ -54,6 +54,7 @@
 | :--- | :--- | :--- | :--- |
 | **`AdBlock.list`** | `REJECT` | **【强力推荐】全能去广告与反追踪盾（928 条）**：干掉 23 万条臃肿僵尸规则，精准拦截国内 App 开屏广告 SDK、遥测埋点及海外广告联盟 | `https://raw.githubusercontent.com/J606y/loon-rules/main/rules/AdBlock.list` |
 | **`China.list`** | `国内网站` (DIRECT) | **纯净国内直连库（1713 条）**：已剔除误判的微软与海外 CDN，国内软件秒开不再转圈 | `https://raw.githubusercontent.com/J606y/loon-rules/main/rules/China.list` |
+| **`ChinaASN.list`** | `国内网站` (DIRECT) | **中国自治系统直连库（1009 条）**：三大运营商及国内云厂商 BGP 自治系统号，零 DNS 负担（带 no-resolve） | `https://raw.githubusercontent.com/J606y/loon-rules/main/rules/ChinaASN.list` |
 | **`WeChat.list`** | `国内网站` (DIRECT) | 微信专属直连（687 条）：覆盖微信小程序、图文与支付 | `https://raw.githubusercontent.com/J606y/loon-rules/main/rules/WeChat.list` |
 | **`STUN.list`** | `REJECT` | **WebRTC 专用全局阻断集**：强杀 UDP 3478/5349 及 stun 探测域，防真实 IP 穿透暴露 | `https://raw.githubusercontent.com/J606y/loon-rules/main/rules/STUN.list` |
 

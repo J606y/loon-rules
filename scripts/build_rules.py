@@ -42,7 +42,7 @@ TARGETS = {
     ]},
 }
 
-headers = {"User-Agent": "hermes-loon-rules-builder/3"}
+headers = {"User-Agent": "Loon/919 CFNetwork/3860.500.111.2.2 Darwin/25.0.0"}
 ctx = ssl.create_default_context()
 
 def fetch(url):
@@ -324,6 +324,28 @@ def build_all():
     ] + final_ad_rules
     (RULES_DIR / "AdBlock.list").write_text("\n".join(ad_content) + "\n", encoding="utf-8")
     print(f" -> {'Global AdBlock':15}: {len(final_ad_rules):5d} rules")
+
+    # 5. 编译 ChinaASN.list (中国大陆自治系统直连库，零 DNS 负担)
+    print("Building ChinaASN.list...")
+    asn_raw = fetch("https://rule.kelee.one/Loon/ChinaASN.lsr")
+    asn_rules = set()
+    for l in asn_raw.splitlines():
+        l = l.strip()
+        if l and not l.startswith("#"):
+            parts = [p.strip() for p in l.split(",")]
+            if len(parts) >= 2 and parts[0] == "IP-ASN":
+                asn_rules.add(f"IP-ASN,{parts[1]},no-resolve")
+    
+    asn_sorted = sorted(asn_rules)
+    asn_content = [
+        "# ========================================================",
+        "# Loon Rule Set: China ASN Direct (中国大陆自治系统 BGP 直连)",
+        "# 覆盖中国电信、联通、移动、教育网及各大国内云厂商 (带 no-resolve)",
+        "# Cleaned & Maintained by Hermes Agent",
+        "# ========================================================",
+    ] + asn_sorted
+    (RULES_DIR / "ChinaASN.list").write_text("\n".join(asn_content) + "\n", encoding="utf-8")
+    print(f" -> {'China ASN':15}: {len(asn_sorted):5d} rules")
 
 if __name__ == "__main__":
     build_all()
