@@ -48,10 +48,11 @@
 
 ---
 
-### 4. 🛡️ 安全与国内直连专区
+### 4. 🛡️ 广告拦截与安全直连专区
 
 | 规则名称 | 建议策略 | 核心价值 | Loon 远程规则订阅链接 |
 | :--- | :--- | :--- | :--- |
+| **`AdBlock.list`** | `REJECT` | **【强力推荐】全能去广告与反追踪盾（928 条）**：干掉 23 万条臃肿僵尸规则，精准拦截国内 App 开屏广告 SDK、遥测埋点及海外广告联盟 | `https://raw.githubusercontent.com/J606y/loon-rules/main/rules/AdBlock.list` |
 | **`China.list`** | `国内网站` (DIRECT) | **纯净国内直连库（1713 条）**：已剔除误判的微软与海外 CDN，国内软件秒开不再转圈 | `https://raw.githubusercontent.com/J606y/loon-rules/main/rules/China.list` |
 | **`WeChat.list`** | `国内网站` (DIRECT) | 微信专属直连（687 条）：覆盖微信小程序、图文与支付 | `https://raw.githubusercontent.com/J606y/loon-rules/main/rules/WeChat.list` |
 | **`STUN.list`** | `REJECT` | **WebRTC 专用全局阻断集**：强杀 UDP 3478/5349 及 stun 探测域，防真实 IP 穿透暴露 | `https://raw.githubusercontent.com/J606y/loon-rules/main/rules/STUN.list` |

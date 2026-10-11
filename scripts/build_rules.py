@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Loon 全量高质量规则生成器：覆盖 AI、社交、流媒体、大厂基础设施及纯净国内直连。"""
+"""Loon 全量高质量规则生成器：覆盖 AI、社交、流媒体、大厂基础设施、纯净国内直连及广告拦截。"""
 import os
 import sys
 import ssl
@@ -42,7 +42,7 @@ TARGETS = {
     ]},
 }
 
-headers = {"User-Agent": "hermes-loon-rules-builder/2"}
+headers = {"User-Agent": "hermes-loon-rules-builder/3"}
 ctx = ssl.create_default_context()
 
 def fetch(url):
@@ -220,6 +220,78 @@ def build_all():
     ] + clean_china_sorted
     (RULES_DIR / "China.list").write_text("\n".join(china_content) + "\n", encoding="utf-8")
     print(f" -> {'China (Clean Direct)':15}: {len(clean_china_sorted):5d} rules")
+
+    # 4. 编译全能广告与隐私拦截库 AdBlock.list
+    print("Building High-Performance AdBlock.list...")
+    ad_rules = set()
+    # MetaCubeX 官方 category-ads-all
+    ads_yaml = fetch("https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/classical/category-ads-all.yaml")
+    for l in ads_yaml.splitlines():
+        l = l.strip()
+        if l.startswith("- "):
+            val = l[2:].strip().strip("'\"")
+            if "," in val:
+                parts = val.split(",")
+                ad_rules.add(f"{parts[0].strip()},{parts[1].strip()},REJECT")
+    
+    # 常用国内高频开屏广告 SDK、大数据追踪埋点
+    domestic_ads = [
+        "DOMAIN-SUFFIX,umeng.com,REJECT",
+        "DOMAIN-SUFFIX,umengcloud.com,REJECT",
+        "DOMAIN-SUFFIX,talkingdata.com,REJECT",
+        "DOMAIN-SUFFIX,talkingdata.net,REJECT",
+        "DOMAIN-SUFFIX,growingio.com,REJECT",
+        "DOMAIN-SUFFIX,sensorsdata.cn,REJECT",
+        "DOMAIN-SUFFIX,jpush.cn,REJECT",
+        "DOMAIN-SUFFIX,jiguang.cn,REJECT",
+        "DOMAIN-SUFFIX,bugly.qq.com,REJECT",
+        "DOMAIN-SUFFIX,adashx.m.taobao.com,REJECT",
+        "DOMAIN-SUFFIX,mobads.baidu.com,REJECT",
+        "DOMAIN-SUFFIX,mobads-logs.baidu.com,REJECT",
+        "DOMAIN-SUFFIX,pos.baidu.com,REJECT",
+        "DOMAIN-SUFFIX,eclick.baidu.com,REJECT",
+        "DOMAIN-SUFFIX,baidustatic.com,REJECT",
+        "DOMAIN-SUFFIX,pangolin-sdk-toutiao.com,REJECT",
+        "DOMAIN-SUFFIX,pangolin-sdk-toutiao-b.com,REJECT",
+        "DOMAIN-SUFFIX,pglstatp-toutiao.com,REJECT",
+        "DOMAIN-SUFFIX,ad.weibo.com,REJECT",
+        "DOMAIN-SUFFIX,ads.weibo.com,REJECT",
+        "DOMAIN-SUFFIX,biz.weibo.com,REJECT",
+        "DOMAIN-SUFFIX,sax.sina.com.cn,REJECT",
+        "DOMAIN-SUFFIX,adx.meituan.com,REJECT",
+        "DOMAIN-SUFFIX,adash.m.taobao.com,REJECT",
+        "DOMAIN-SUFFIX,adash.man.aliyuncs.com,REJECT",
+        "DOMAIN-SUFFIX,adash-emas.cn-hangzhou.aliyuncs.com,REJECT",
+        "DOMAIN-SUFFIX,atanx.com,REJECT",
+        "DOMAIN-SUFFIX,tanx.com,REJECT",
+        "DOMAIN-SUFFIX,miaozhen.com,REJECT",
+        "DOMAIN-SUFFIX,irs01.com,REJECT",
+        "DOMAIN-SUFFIX,irs01.net,REJECT",
+        "DOMAIN-SUFFIX,track.58.com,REJECT",
+        "DOMAIN-SUFFIX,cupid.iqiyi.com,REJECT",
+        "DOMAIN-SUFFIX,cupid.ptqy.gitv.tv,REJECT",
+        "DOMAIN-SUFFIX,pagead2.googlesyndication.com,REJECT",
+        "DOMAIN-SUFFIX,googleadservices.com,REJECT",
+        "DOMAIN-SUFFIX,doubleclick.net,REJECT",
+        "DOMAIN-SUFFIX,adservice.google.com,REJECT",
+        "DOMAIN-SUFFIX,appsflyer.com,REJECT",
+        "DOMAIN-SUFFIX,adjust.com,REJECT",
+        "DOMAIN-SUFFIX,kochava.com,REJECT",
+        "DOMAIN-KEYWORD,adservice,REJECT",
+        "DOMAIN-KEYWORD,adsystem,REJECT",
+        "DOMAIN-KEYWORD,adstrategy,REJECT",
+    ]
+    ad_rules |= set(domestic_ads)
+    ad_sorted = sorted(ad_rules)
+    ad_content = [
+        "# ========================================================",
+        "# Loon Rule Set: AdBlock & Privacy Tracker Shield",
+        "# Policy: REJECT (自包含 REJECT 策略，丢弃开屏广告与遥测埋点)",
+        "# Cleaned & Maintained by Hermes Agent",
+        "# ========================================================",
+    ] + ad_sorted
+    (RULES_DIR / "AdBlock.list").write_text("\n".join(ad_content) + "\n", encoding="utf-8")
+    print(f" -> {'AdBlock (Shield)':15}: {len(ad_sorted):5d} rules")
 
 if __name__ == "__main__":
     build_all()
