@@ -221,9 +221,11 @@ def build_all():
     (RULES_DIR / "China.list").write_text("\n".join(china_content) + "\n", encoding="utf-8")
     print(f" -> {'China (Clean Direct)':15}: {len(clean_china_sorted):5d} rules")
 
-    # 4. 编译全能广告与隐私拦截库 AdBlock.list
-    print("Building High-Performance AdBlock.list...")
-    ad_rules = set()
+    # 4. 编译全能广告与隐私拦截库 AdBlock.list (涵盖国内开屏 + 海外全量广告联盟)
+    print("Building High-Performance Global AdBlock.list...")
+    ad_suffixes = set()
+    ad_exacts = set()
+    
     # MetaCubeX 官方 category-ads-all
     ads_yaml = fetch("https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/classical/category-ads-all.yaml")
     for l in ads_yaml.splitlines():
@@ -231,67 +233,97 @@ def build_all():
         if l.startswith("- "):
             val = l[2:].strip().strip("'\"")
             if "," in val:
-                parts = val.split(",")
-                ad_rules.add(f"{parts[0].strip()},{parts[1].strip()},REJECT")
-    
-    # 常用国内高频开屏广告 SDK、大数据追踪埋点
-    domestic_ads = [
-        "DOMAIN-SUFFIX,umeng.com,REJECT",
-        "DOMAIN-SUFFIX,umengcloud.com,REJECT",
-        "DOMAIN-SUFFIX,talkingdata.com,REJECT",
-        "DOMAIN-SUFFIX,talkingdata.net,REJECT",
-        "DOMAIN-SUFFIX,growingio.com,REJECT",
-        "DOMAIN-SUFFIX,sensorsdata.cn,REJECT",
-        "DOMAIN-SUFFIX,jpush.cn,REJECT",
-        "DOMAIN-SUFFIX,jiguang.cn,REJECT",
-        "DOMAIN-SUFFIX,bugly.qq.com,REJECT",
-        "DOMAIN-SUFFIX,adashx.m.taobao.com,REJECT",
-        "DOMAIN-SUFFIX,mobads.baidu.com,REJECT",
-        "DOMAIN-SUFFIX,mobads-logs.baidu.com,REJECT",
-        "DOMAIN-SUFFIX,pos.baidu.com,REJECT",
-        "DOMAIN-SUFFIX,eclick.baidu.com,REJECT",
-        "DOMAIN-SUFFIX,baidustatic.com,REJECT",
-        "DOMAIN-SUFFIX,pangolin-sdk-toutiao.com,REJECT",
-        "DOMAIN-SUFFIX,pangolin-sdk-toutiao-b.com,REJECT",
-        "DOMAIN-SUFFIX,pglstatp-toutiao.com,REJECT",
-        "DOMAIN-SUFFIX,ad.weibo.com,REJECT",
-        "DOMAIN-SUFFIX,ads.weibo.com,REJECT",
-        "DOMAIN-SUFFIX,biz.weibo.com,REJECT",
-        "DOMAIN-SUFFIX,sax.sina.com.cn,REJECT",
-        "DOMAIN-SUFFIX,adx.meituan.com,REJECT",
-        "DOMAIN-SUFFIX,adash.m.taobao.com,REJECT",
-        "DOMAIN-SUFFIX,adash.man.aliyuncs.com,REJECT",
-        "DOMAIN-SUFFIX,adash-emas.cn-hangzhou.aliyuncs.com,REJECT",
-        "DOMAIN-SUFFIX,atanx.com,REJECT",
-        "DOMAIN-SUFFIX,tanx.com,REJECT",
-        "DOMAIN-SUFFIX,miaozhen.com,REJECT",
-        "DOMAIN-SUFFIX,irs01.com,REJECT",
-        "DOMAIN-SUFFIX,irs01.net,REJECT",
-        "DOMAIN-SUFFIX,track.58.com,REJECT",
-        "DOMAIN-SUFFIX,cupid.iqiyi.com,REJECT",
-        "DOMAIN-SUFFIX,cupid.ptqy.gitv.tv,REJECT",
-        "DOMAIN-SUFFIX,pagead2.googlesyndication.com,REJECT",
-        "DOMAIN-SUFFIX,googleadservices.com,REJECT",
-        "DOMAIN-SUFFIX,doubleclick.net,REJECT",
-        "DOMAIN-SUFFIX,adservice.google.com,REJECT",
-        "DOMAIN-SUFFIX,appsflyer.com,REJECT",
-        "DOMAIN-SUFFIX,adjust.com,REJECT",
-        "DOMAIN-SUFFIX,kochava.com,REJECT",
-        "DOMAIN-KEYWORD,adservice,REJECT",
-        "DOMAIN-KEYWORD,adsystem,REJECT",
-        "DOMAIN-KEYWORD,adstrategy,REJECT",
+                k, v = val.split(",", 1)
+                k, v = k.strip(), v.strip().lower()
+                if k == "DOMAIN-SUFFIX":
+                    ad_suffixes.add(v)
+                elif k == "DOMAIN":
+                    ad_exacts.add(v)
+
+    # 海外顶级广告网络、移动端 SDK 与行为追踪
+    foreign_major_ads = [
+        # Google / Alphabet
+        "2mdn.net", "admob.com", "adsense.com", "adservice.google.com", "adservices.google.com",
+        "doubleclick.net", "googleadservices.com", "googleads.g.doubleclick.net", "googlesyndication.com",
+        "googletagmanager.com", "googletagservices.com", "pagead2.googlesyndication.com",
+        # Facebook / Meta
+        "an.facebook.com", "pixel.facebook.com", "connect.facebook.net",
+        # Amazon Ad
+        "aax-us-east.amazon-adsystem.com", "amazon-adsystem.com", "assoc-amazon.com",
+        # Global Ad Networks & Information Feed
+        "criteo.com", "criteo.net", "taboola.com", "outbrain.com", "outbrainimg.com",
+        "thetradedesk.com", "pubmatic.com", "openx.net", "rubiconproject.com", "magnite.com",
+        "casalemedia.com", "sovrn.com", "yieldmo.com", "sharethrough.com", "smartadserver.com",
+        "triplelift.com", "indexexchange.com", "adroll.com", "media.net", "zergnet.com",
+        "revcontent.com", "mgid.com", "popads.net", "popcash.net", "propellerads.com",
+        "exoclick.com", "trafficjunky.com", "juicyads.com", "adxprtz.com", "adtrue.com",
+        # Mobile App SDKs
+        "unityads.unity3d.com", "applvn.com", "applovin.com",
+        "vungle.com", "ironsrc.com", "supersonicads.com", "inmobi.com", "chartboost.com",
+        "mintegral.com", "adcolony.com", "liftoff.io", "fyber.com", "tapjoy.com",
+        "startapp.com", "startappexchange.com", "flurry.com",
+        # Foreign Analytics & Device Fingerprinting
+        "appsflyer.com", "adjust.com", "adjust.net.in", "kochava.com", "branch.io",
+        "singular.net", "mixpanel.com", "amplitude.com", "heap.io", "segment.io",
+        "segment.com", "hotjar.com", "mouseflow.com", "fullstory.com", "smartlook.com",
+        "crazyegg.com", "inspectlet.com", "qualaroo.com", "optimizely.com",
+        # Streaming Audio/Video Ad Injection
+        "adeventtracker.spotify.com", "ads.youtube.com", "innovid.com", "flashtalking.com",
+        "spongecell.com", "sizmek.com", "moatads.com", "iasds01.com", "doubleverify.com"
     ]
-    ad_rules |= set(domestic_ads)
-    ad_sorted = sorted(ad_rules)
+    ad_suffixes |= set(foreign_major_ads)
+
+    # 国内高频开屏广告 SDK、大数据追踪埋点
+    domestic_ads = [
+        "umeng.com", "umengcloud.com", "talkingdata.com", "talkingdata.net",
+        "growingio.com", "sensorsdata.cn", "jpush.cn", "jiguang.cn",
+        "bugly.qq.com", "adashx.m.taobao.com", "mobads.baidu.com",
+        "mobads-logs.baidu.com", "pos.baidu.com", "eclick.baidu.com",
+        "baidustatic.com", "pangolin-sdk-toutiao.com", "pangolin-sdk-toutiao-b.com",
+        "pglstatp-toutiao.com", "ad.weibo.com", "ads.weibo.com", "biz.weibo.com",
+        "sax.sina.com.cn", "adx.meituan.com", "adash.m.taobao.com",
+        "adash.man.aliyuncs.com", "adash-emas.cn-hangzhou.aliyuncs.com",
+        "atanx.com", "tanx.com", "miaozhen.com", "irs01.com", "irs01.net",
+        "track.58.com", "cupid.iqiyi.com", "cupid.ptqy.gitv.tv"
+    ]
+    ad_suffixes |= set(domestic_ads)
+
+    # 后缀剪枝
+    pruned_suffixes = set()
+    for s in ad_suffixes:
+        parts = s.split(".")
+        is_redundant = False
+        for i in range(1, len(parts)):
+            parent = ".".join(parts[i:])
+            if parent in ad_suffixes:
+                is_redundant = True
+                break
+        if not is_redundant:
+            pruned_suffixes.add(s)
+
+    final_ad_rules = []
+    # 关键字
+    for kw in ["adservice", "adsystem", "adstrategy", "adserver"]:
+        final_ad_rules.append(f"DOMAIN-KEYWORD,{kw},REJECT")
+    # 后缀
+    for s in sorted(pruned_suffixes):
+        final_ad_rules.append(f"DOMAIN-SUFFIX,{s},REJECT")
+    # 精确单域
+    for e in sorted(ad_exacts):
+        # 如果已被后缀覆盖则不加
+        parts = e.split(".")
+        if not any(".".join(parts[i:]) in pruned_suffixes for i in range(len(parts))):
+            final_ad_rules.append(f"DOMAIN,{e},REJECT")
+
     ad_content = [
         "# ========================================================",
-        "# Loon Rule Set: AdBlock & Privacy Tracker Shield",
-        "# Policy: REJECT (自包含 REJECT 策略，丢弃开屏广告与遥测埋点)",
+        "# Loon Rule Set: Global AdBlock & Privacy Tracker Shield",
+        "# Policy: REJECT (覆盖国内开屏广告 + 全球头部海外广告联盟/SDK)",
         "# Cleaned & Maintained by Hermes Agent",
         "# ========================================================",
-    ] + ad_sorted
+    ] + final_ad_rules
     (RULES_DIR / "AdBlock.list").write_text("\n".join(ad_content) + "\n", encoding="utf-8")
-    print(f" -> {'AdBlock (Shield)':15}: {len(ad_sorted):5d} rules")
+    print(f" -> {'Global AdBlock':15}: {len(final_ad_rules):5d} rules")
 
 if __name__ == "__main__":
     build_all()
