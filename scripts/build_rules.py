@@ -132,7 +132,9 @@ def build_all():
     # 1. 编译全能 AI.list
     extra_ai = [
         "DOMAIN-SUFFIX,perplexity.ai", "DOMAIN-SUFFIX,cursor.com", "DOMAIN-SUFFIX,cursor.sh",
-        "DOMAIN-SUFFIX,chat.com", "DOMAIN-SUFFIX,sora.com"
+        "DOMAIN-SUFFIX,chat.com", "DOMAIN-SUFFIX,sora.com",
+        "DOMAIN-SUFFIX,grok.com", "DOMAIN-SUFFIX,grokipedia.com", "DOMAIN-SUFFIX,x.ai",
+        "DOMAIN,grok.x.com"
     ]
     all_ai_rules |= set(extra_ai)
     ai_sorted = sorted(all_ai_rules)
