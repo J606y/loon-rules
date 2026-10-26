@@ -13,7 +13,7 @@ DOMAIN,alkalimakersuite-pa.clients6.google.com
 DOMAIN,antigravity-pa.googleapis.com
 DOMAIN,antigravity.googleapis.com
 DOMAIN,browser-intake-datadoghq.com
-DOMAIN,browser-intake-datadoghq.com @ads
+DOMAIN,browser-intake-datadoghq.com @ads @telemetry
 DOMAIN,cloudaicompanion.googleapis.com
 DOMAIN,cloudcode-pa.googleapis.com
 DOMAIN,daily-cloudcode-pa.googleapis.com
@@ -23,9 +23,9 @@ DOMAIN,grok.x.com
 DOMAIN,notebooklm-pa.googleapis.com
 DOMAIN,notebooklm.googleapis.com
 DOMAIN,o33249.ingest.sentry.io
-DOMAIN,o33249.ingest.sentry.io @ads
+DOMAIN,o33249.ingest.sentry.io @ads @telemetry
 DOMAIN,o33249.ingest.us.sentry.io
-DOMAIN,o33249.ingest.us.sentry.io @ads
+DOMAIN,o33249.ingest.us.sentry.io @ads @telemetry
 DOMAIN,openai.qualtrics.com
 DOMAIN,openai.qualtrics.com @ads
 DOMAIN,openaiapi-site.azureedge.net

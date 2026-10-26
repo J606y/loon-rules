@@ -344,6 +344,7 @@ DOMAIN-SUFFIX,cosmosdb.net
 DOMAIN-SUFFIX,crmdynint-gcc.com
 DOMAIN-SUFFIX,crmdynint.com
 DOMAIN-SUFFIX,crossborderexpansion.com
+DOMAIN-SUFFIX,data.microsoft.com
 DOMAIN-SUFFIX,dcg.microsoft.com
 DOMAIN-SUFFIX,dependabot.com
 DOMAIN-SUFFIX,devopsassessment.net
@@ -728,6 +729,7 @@ DOMAIN-SUFFIX,sysinternals.com
 DOMAIN-SUFFIX,t-msedge.net
 DOMAIN-SUFFIX,tailwindtraders.com
 DOMAIN-SUFFIX,techhub.ms
+DOMAIN-SUFFIX,telemetry.microsoft.com
 DOMAIN-SUFFIX,tellmewhygame.com
 DOMAIN-SUFFIX,tfsallin.net
 DOMAIN-SUFFIX,th.bing.com

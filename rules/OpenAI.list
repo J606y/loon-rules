@@ -8,11 +8,11 @@ AND,((PROTOCOL,UDP),(DEST-PORT,5349)),REJECT
 DOMAIN-KEYWORD,stun,REJECT
 # --- Target Rules ---
 DOMAIN,browser-intake-datadoghq.com
-DOMAIN,browser-intake-datadoghq.com @ads
+DOMAIN,browser-intake-datadoghq.com @ads @telemetry
 DOMAIN,o33249.ingest.sentry.io
-DOMAIN,o33249.ingest.sentry.io @ads
+DOMAIN,o33249.ingest.sentry.io @ads @telemetry
 DOMAIN,o33249.ingest.us.sentry.io
-DOMAIN,o33249.ingest.us.sentry.io @ads
+DOMAIN,o33249.ingest.us.sentry.io @ads @telemetry
 DOMAIN,openai.qualtrics.com
 DOMAIN,openai.qualtrics.com @ads
 DOMAIN,openaiapi-site.azureedge.net
