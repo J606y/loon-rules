@@ -39,6 +39,9 @@ DOMAIN,app-measurement.com
 DOMAIN,app-measurement.com @cn
 DOMAIN,apps5.oingo.com
 DOMAIN,apps5.oingo.com @cn
+DOMAIN,appsgenaiserver-pa.clients.google.com
+DOMAIN,appsgenaiserver-pa.clients6.google.com
+DOMAIN,appsgenaiserver-pa.googleapis.com
 DOMAIN,avail.googleflights.net
 DOMAIN,avail.googleflights.net @cn
 DOMAIN,beacons.gcp.gvt2.com

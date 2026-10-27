@@ -7,7 +7,6 @@ AND,((PROTOCOL,UDP),(DEST-PORT,3478)),REJECT
 AND,((PROTOCOL,UDP),(DEST-PORT,5349)),REJECT
 DOMAIN-KEYWORD,stun,REJECT
 # --- Target Rules ---
-DOMAIN,netflix.com.edgesuite.net
 DOMAIN-REGEX,(^|\.)apiproxy-device-prod-nlb-.+\.amazonaws\.com$
 DOMAIN-REGEX,(^|\.)apiproxy-website-nlb-prod-.+\.amazonaws\.com$
 DOMAIN-REGEX,(^|\.)dualstack\.apiproxy-.+\.amazonaws\.com$
