@@ -327,9 +327,11 @@ DOMAIN,seed.siri.apple.com @cn
 DOMAIN,sequoia.apple.com
 DOMAIN,sequoia.apple.com @cn
 DOMAIN,sf-api-token-service.itunes.apple.com
+DOMAIN,sh-pod1-smp-device.apple.com
 DOMAIN,sh-pod1-smp-device.apple.com @cn
 DOMAIN,sh-pod2-smp-device.apple.com
 DOMAIN,sh-pod2-smp-device.apple.com @cn
+DOMAIN,sh-pod3-smp-device.apple.com
 DOMAIN,sh-pod3-smp-device.apple.com @cn
 DOMAIN,shazam-insights.cdn-apple.com
 DOMAIN,shazam-insights.cdn-apple.com @cn
