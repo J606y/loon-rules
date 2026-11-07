@@ -7,6 +7,8 @@ AND,((PROTOCOL,UDP),(DEST-PORT,3478)),REJECT
 AND,((PROTOCOL,UDP),(DEST-PORT,5349)),REJECT
 DOMAIN-KEYWORD,stun,REJECT
 # --- Target Rules ---
+DOMAIN,http-intake.logs.us5.datadoghq.com @telemetry
+DOMAIN,o1158394.ingest.us.sentry.io @telemetry
 DOMAIN,servd-anthropic-website.b-cdn.net
 DOMAIN-SUFFIX,ant.dev
 DOMAIN-SUFFIX,anthropic.com
