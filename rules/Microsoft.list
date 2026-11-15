@@ -164,7 +164,6 @@ DOMAIN,vscode-sync-insiders.trafficmanager.net
 DOMAIN,vscode-sync.trafficmanager.net
 DOMAIN,vscode.blob.core.windows.net
 DOMAIN,vscode.download.prss.microsoft.com
-DOMAIN,vscode.download.prss.microsoft.com @cn
 DOMAIN,vscode.search.windows.net
 DOMAIN,vsmarketplacebadge.apphb.com
 DOMAIN,vz.download.prss.microsoft.com

@@ -120,6 +120,7 @@ DOMAIN,configuration.apple.com
 DOMAIN,configuration.apple.com @cn
 DOMAIN,configuration.apple.com.akadns.net
 DOMAIN,configuration.apple.com.akadns.net @cn
+DOMAIN,configuration.ls.apple.com @cn
 DOMAIN,crl-lb.apple.com.akadns.net
 DOMAIN,crl.apple.com
 DOMAIN,cstat.apple.com
@@ -1153,6 +1154,7 @@ DOMAIN-SUFFIX,calendarserver.org
 DOMAIN-SUFFIX,camelphat.com
 DOMAIN-SUFFIX,camelspaceeffect.com
 DOMAIN-SUFFIX,canada-beatsbydre.com
+DOMAIN-SUFFIX,captive.apple.com
 DOMAIN-SUFFIX,carbon.com
 DOMAIN-SUFFIX,carekit.org
 DOMAIN-SUFFIX,casque-fr.com
