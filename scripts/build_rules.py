@@ -13,7 +13,7 @@ RULES_DIR = ROOT / "rules"
 
 TARGETS = {
     # 1. 核心 AI 资产
-    "Claude": {"v2": "anthropic", "mc": "anthropic", "stun": True},
+    "Claude": {"v2": "anthropic", "mc": "anthropic", "stun": True, "extra": ["DOMAIN,http-intake.logs.us5.datadoghq.com"]},
     "OpenAI": {"v2": "openai", "mc": "openai", "stun": True, "extra": ["chat.com", "sora.com", "oaistatsig.com", "openaiassets.blob.core.windows.net"]},
     "Gemini": {"v2": "google-gemini", "mc": "google-gemini", "stun": True, "extra": ["aistudio.google.com", "generativelanguage.googleapis.com"]},
     # 2. 流媒体与社交
@@ -64,11 +64,15 @@ def parse_rules(text):
             line = line[2:].strip().strip("'\"")
             if "," in line:
                 parts = line.split(",")
-                rules.add(f"{parts[0].strip()},{parts[1].strip()}")
+                val = parts[1].split()[0].strip()
+                if val:
+                    rules.add(f"{parts[0].strip()},{val}")
                 continue
         # handle v2fly
         if line.startswith("full:"):
-            rules.add(f"DOMAIN,{line[5:].strip()}")
+            val = line[5:].split()[0].strip()
+            if "." in val and not val.startswith("@"):
+                rules.add(f"DOMAIN,{val}")
         elif line.startswith("regexp:") or line.startswith("^") or line.startswith("include:"):
             continue
         else:
@@ -83,7 +87,7 @@ def build_single(item):
     
     if "extra" in conf:
         for d in conf["extra"]:
-            rules.add(f"DOMAIN-SUFFIX,{d}")
+            rules.add(d if "," in d else f"DOMAIN-SUFFIX,{d}")
 
     # v2fly
     v2_url = f"https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/{conf['v2']}"
