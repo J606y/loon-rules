@@ -700,6 +700,7 @@ DOMAIN-SUFFIX,tce.alicdn.com,REJECT
 DOMAIN-SUFFIX,tcss.qq.com,REJECT
 DOMAIN-SUFFIX,tdsdk.cpatrk.net,REJECT
 DOMAIN-SUFFIX,telecome.cn,REJECT
+DOMAIN-SUFFIX,tencentads.com,REJECT
 DOMAIN-SUFFIX,testads.api.my7v.com,REJECT
 DOMAIN-SUFFIX,theta.sogoucdn.com,REJECT
 DOMAIN-SUFFIX,thetradedesk.com,REJECT
